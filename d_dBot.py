@@ -7,7 +7,6 @@ bot_prefix = "d."
 bot = commands.Bot(command_prefix=bot_prefix)
 
 def id_already_exists(id):
-	print(type(id))
 	c.execute("SELECT * FROM discord WHERE ID=? ", (id,))
 	if c.fetchone() == None:
 		return False
@@ -15,7 +14,7 @@ def id_already_exists(id):
 
 def read_token():
 	'''Reads the token located in a text file'''
-	with open("token.txt", "r") as f:
+	with open(r"..\token.txt", "r") as f:
 		lines = f.readlines()
 		return lines[0].strip()
 
@@ -67,6 +66,6 @@ async def perso(ctx):
 	X=char_create()
 	await ctx.send(str(X[0])+"\n"+str(X[1])+"\n"+str(X[2])+"\n"+str(X[3])+"\n"+str(X[4])+"\n"+str(X[5]))	
 if __name__ == "__main__":
-	conn = sqlite3.connect("discord.db")
+	conn = sqlite3.connect(r"..\discord.db")
 	c = conn.cursor()
 	bot.run(read_token())
