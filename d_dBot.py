@@ -8,7 +8,7 @@ bot = commands.Bot(command_prefix=bot_prefix)
 
 def id_already_exists(id):
 	print(type(id))
-	c.execute("SELECT * FROM discord WHERE ID=? ;",id)
+	c.execute("SELECT * FROM discord WHERE ID=? ;", (id,))
 	if c.fetchone() == None:
 		return False
 	return True
@@ -57,8 +57,8 @@ async def on_message(message):
 	id = message.author.id
 	name = message.author.name
 	if not id_already_exists(id):
-		c.execute("INSERT INTO discord VALUES(:id, :XP, :name )", {"id": id, "XP": 0, "name": name})
-	c.execute("UPDATE discord SET XP = XP + 1 WHERE id=?", id)
+		c.execute("INSERT INTO discord VALUES(:ID, :XP, :NAME )", {"ID": id, "XP": 0, "NAME": name})
+	c.execute("UPDATE discord SET XP = XP + 1 WHERE ID=?", id)
 	conn.commit()
 	await bot.process_commands(message)
 	
